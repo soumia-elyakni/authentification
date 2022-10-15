@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/soumia-elyakni/authentification/issues"
   },
-  "homepage": "https://github.com/soumia-elyakni/authentification#readme"
+  "homepage": "https://github.com/soumia-elyakni/authentification#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
