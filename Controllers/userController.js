@@ -1,6 +1,6 @@
-    
+    const User = require('../Models/User');
     const register = (req,res) => {
-    res.send('register');
+    
 }
 
 module.exports = register;
