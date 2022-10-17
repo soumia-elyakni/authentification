@@ -1,4 +1,5 @@
     const User = require('../Models/User');
+
     const register = (req,res) => {
       const {body}=req
        User.create({...body}).then(()=>{
@@ -10,5 +11,5 @@
          
 }
 
-module.exports = register;
+module.exports = {register};
 
