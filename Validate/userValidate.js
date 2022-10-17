@@ -1,6 +1,10 @@
 const Joi = require('@hapi/joi');
-const joi = require('@hapi/joi');
-const schema = {
-    name: Joi.string().min(8).required(),
-    email : Joi.string().min().required().email(),
+
+const userValidSchema = {
+    name: Joi.string().min(8).max(50).required(),
+    email : Joi.string().min(11).required().email(),
+    password : Joi.string().min(8).required()
 }
+
+module.exports = userValidSchema;
+
