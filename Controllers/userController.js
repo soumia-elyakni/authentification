@@ -1,6 +1,9 @@
     const User = require('../Models/User');
     const bcrypt = require('bcryptjs'); 
     const jwt = require('jsonwebtoken');
+    const dotenv = require('dotenv');
+
+    dotenv.config();
 
     const register = (req,res) => {
      
@@ -31,8 +34,8 @@ const login = (req,res) => {
     if(user){
       bcrypt.compare(req.body.password, user.password).then(pass=>{
         if(pass){
-          const token = jwt.sign({_id: user._id})
-          res.send('logged');
+          const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+          res.send(token);
         } else { 
           res.send('Worrong password')}
       })
