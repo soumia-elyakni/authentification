@@ -22,12 +22,24 @@
       }
      })
       
-    
-      
-      
-    
          
 }
 
-module.exports = {register};
+const login = (req,res) => {
+  User.findOne({email:req.body.email}).then(user=>{
+    if(user){
+      bcrypt.compare(req.body.password, user.password).then(pass=>{
+        if(pass){
+          res.send('logged');
+        } else { 
+          res.send('Worrong password')}
+      })
+    } else { 
+      res.send('email not existed')}
+  })
+}
+
+
+
+module.exports = {register, login};
 
