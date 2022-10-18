@@ -1,5 +1,6 @@
     const User = require('../Models/User');
     const bcrypt = require('bcryptjs'); 
+    const jwt = require('jsonwebtoken');
 
     const register = (req,res) => {
      
@@ -30,6 +31,7 @@ const login = (req,res) => {
     if(user){
       bcrypt.compare(req.body.password, user.password).then(pass=>{
         if(pass){
+          const token = jwt.sign({_id: user._id})
           res.send('logged');
         } else { 
           res.send('Worrong password')}
