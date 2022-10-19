@@ -35,7 +35,7 @@ const login = (req,res) => {
       bcrypt.compare(req.body.password, user.password).then(pass=>{
         if(pass){
           const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
-          res.send(token);
+          res.header('auth-token', token).send(token);
         } else { 
           res.send('Worrong password')}
       })
