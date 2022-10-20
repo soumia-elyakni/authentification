@@ -2,6 +2,7 @@
     const bcrypt = require('bcryptjs'); 
     const jwt = require('jsonwebtoken');
     const dotenv = require('dotenv');
+   
 
     dotenv.config();
 
@@ -44,7 +45,12 @@ const login = (req,res) => {
   })
 }
 
+const get = (req,res) =>{
+  res.json({posts:{title: 'my first post', description: 'random data you shouldnt access'}});
+
+}
 
 
-module.exports = {register, login};
+
+module.exports = {register, login, get};
 
