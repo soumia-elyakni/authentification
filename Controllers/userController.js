@@ -46,7 +46,8 @@ const login = (req,res) => {
 }
 
 const get = (req,res) =>{
-  res.json({posts:{title: 'my first post', description: 'random data you shouldnt access'}});
+  res.send(req.user);
+  // User.findbyOne({_id: req.user})
 
 }
 
