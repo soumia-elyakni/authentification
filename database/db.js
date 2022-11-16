@@ -1,6 +1,15 @@
 
+const mongoose = require("mongoose");
+const connectDb = async () => {
+    try {
+      const conn = await mongoose.connect(process.env.DB_CONNECT);
+  
+      console.log("connected ", conn.connection.host);
+    } catch (error) {
+      console.log(error);
+      process.exit(1);
+    }
+  };
+  
+  module.exports = connectDb;
 
-
-DB_CONNECT = ('mongodb+srv://root:selyak@cluster0.3j3jmmh.mongodb.net/?retryWrites=true&w=majority');
-
-module.exports = DB_CONNECT ;
