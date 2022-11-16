@@ -1,23 +1,21 @@
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
+const cors = require('cors')
 const route = require('./routes/routes.js');
-const dataBase = require('./database/db');
-const dotenv = require('dotenv');
+const dotenv = require('dotenv').config();
+const dbInit = require("./database/initDb");
 
-// dotenv.config();
-
-mongoose.connect(dataBase,() => console.log('connected'));
+const Port = process.env.PORT
 
 
+dbInit();
 
 //Middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-
-
-//Route Midelwares 
+//Route Midelwares
 app.use('/api/user', route)
 
-app.listen(4700, ()=> console.log('project is running'))
+app.listen(Port, ()=> console.log('project is running'))
