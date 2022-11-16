@@ -1,15 +1,20 @@
     const User = require('../Models/User');
+    const Role = require('../Models/Role')
     const bcrypt = require('bcryptjs'); 
     const jwt = require('jsonwebtoken');
     const dotenv = require('dotenv');
+   
    
 
     dotenv.config();
 
     const register = (req,res) => {
-     
      const {body}=req;
-
+     Role.findOne({role:'client'}).then(e=>{
+      let idRole = e.id
+      req.body.roles =[idRole]
+     })
+     
      User.findOne({email:req.body.email}).then(e=>{
       if(!e){
         bcrypt.hash(body.password,10).then(e=>{
@@ -31,14 +36,14 @@
 }
 
 const login = (req,res) => {
-  User.findOne({email:req.body.email}).then(user=>{
+  User.findOne({email:req.body.email}).populate('roles').then(user=>{
     if(user){
       bcrypt.compare(req.body.password, user.password).then(pass=>{
         if(pass){
-          const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+          const token = jwt.sign({_id: user._id, roles : user.roles.map(e => e.role)[0]}, process.env.TOKEN_SECRET);
           res.header('auth-token', token).send(token);
         } else { 
-          res.send('Worrong password')}
+          res.json({msg:'Worrong password'})}
       })
     } else { 
       res.send('email not existed')}
@@ -46,12 +51,20 @@ const login = (req,res) => {
 }
 
 const get = (req,res) =>{
-  res.send(req.user);
-  // User.findbyOne({_id: req.user})
+  role = req.roles;
 
+  if(role == 'manager') {
+    console.log('welcome to manager dashboard')
+  } else if (role == 'client '){
+    console.log('welcome to client dashboard')
+  }
+}
+
+const logout = async (req, res)=>{
+  header.remove('auth-token')
 }
 
 
 
-module.exports = {register, login, get};
+module.exports = {register, login, get, logout};
 
